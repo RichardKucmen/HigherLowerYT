@@ -49,4 +49,7 @@ class User extends Authenticatable
     public function isAdmin(){
         return $this->roles()->where("name", "admin")->count() == 1;
     }
+    public function videos(){
+        return $this->hasMany("App\Models\Videos");
+    }
 }

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-use App\Http\Controllers\AdminController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -23,8 +23,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(["prefix" => "admin"], function(){
     Route::get("", [AdminController::class, 'index'])->name('admin.index');
-    Route::get("/videos", [AdminController::class, 'getAllVideos'])->name('admin.getAllVideos');
-    Route::get("/video/{id}/edit", [AdminController::class, 'editVideo'])->name('admin.editVideo');
-    Route::get("/video/{id}/delete", [AdminController::class, 'deleteVideo'])->name('admin.deleteVideo');
+    Route::get("/get/videos", [AdminController::class, 'getAllVideos'])->name('admin.getAllVideos');
+    Route::get("/video/edit/{id}", [AdminController::class, 'editVideo'])->name('admin.editVideo');
+    Route::post("/video/update/{id}", [AdminController::class, 'updateVideo'])->name('admin.updateVideo');
+    Route::get("/video/delete/{id}", [AdminController::class, 'deleteVideo'])->name('admin.deleteVideo');
+    Route::get("/video/updateInfo/{id}", [AdminController::class, 'updateInfo'])->name('admin.updateInfo');
+    Route::get("/new/video", function(){
+        return view("admin.new_video", ["video" => (object) ["video_id" => "", "video_name" => "", "video_html_code" => "", "video_views" => "", "user_id" => ""]]);
+    })->name("admin.new_video");
     Route::post("/add/video", [AdminController::class, 'addVideo'])->name('admin.addVideo');
 });

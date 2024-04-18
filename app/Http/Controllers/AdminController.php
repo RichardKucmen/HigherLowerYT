@@ -15,8 +15,11 @@ class AdminController extends Controller
         return view("admin.index", ["videos" => $videos]);
     }
     public function deleteVideo($id){
-        $video = Videos::find($id);
-        $video->delete();
+        $array = explode(",", $id);
+        foreach($array as $one_id){
+            $video = Videos::find($one_id);
+            $video->delete();
+        }
         return redirect()->route("admin.index");
     }
     public function addVideo(Request $request){
@@ -50,14 +53,19 @@ class AdminController extends Controller
         return redirect()->route("admin.index");
     }
     public function updateInfo($id){
-        $video = Videos::find($id);
-        $updatedInfo = $this->getYoutubeInfo($video->video_id);
+        $array = explode(",", $id);
+        foreach($array as $one_id){
+            $video = Videos::find($one_id);
 
-        $video->video_id = $updatedInfo["video_id"];
-        $video->video_html_code = $updatedInfo["video_html_code"];
-        $video->video_views = $updatedInfo["video_views"];
+            $updatedInfo = $this->getYoutubeInfo($video->video_id);
 
-        $video->save();
+            $video->video_id = $updatedInfo["video_id"];
+            $video->video_html_code = $updatedInfo["video_html_code"];
+            $video->video_views = $updatedInfo["video_views"];
+
+            $video->save();
+        }
+
         return redirect()->route("admin.index");
     }
 
@@ -86,8 +94,9 @@ class AdminController extends Controller
                 $video_data_arr = json_decode($video_data, true);
                 if(!empty($video_data_arr['items'])) {
                     $views = $video_data_arr['items'][0]['statistics']['viewCount'];
-                    $result["video_views"] = $views;
-                    $embed_code = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' . $video_id . '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+                    $formatted_views = number_format($views);
+                    $result["video_views"] = $formatted_views;
+                    $embed_code = '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/' . $video_id . '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="rounded-md"></iframe>';
                     $result["video_html_code"] = $embed_code;
                 }
             }

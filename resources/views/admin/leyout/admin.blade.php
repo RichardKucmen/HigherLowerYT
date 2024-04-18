@@ -14,7 +14,7 @@
 <body class="font-['Poppins'] bg-[###FAF5FF]">
     <header>
             <nav class="w-[100%] h-[70px] flex fixed border-b-[2px] justify-end border-[black] text-[black] transition-all z-[100]" id="nav">
-                <ul class="w-[600px] flex justify-between p-[25px] gap-[40px] pr-[100px]">
+                <ul class="w-[600px] flex justify-between p-[25px] gap-[20px] sm:pr-[100px] sm:gap-[40px]">
                     <a href="{{ route("home") }}"><li>Home</li></a>
                     <a href="{{ route("admin.new_video") }}"><li>Add video</li></a>
                     <a href="{{ route("admin.index") }}"><li>All videos</li></a>

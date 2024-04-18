@@ -1,10 +1,11 @@
 @extends("../admin/leyout/admin")
 @section('main_content')
-<div class="w-[70%] m-auto flex gap-[50px]">
-    <div class="thumbnail w-[50%]">
+
+<div class="w-[90%] m-auto flex flex-col gap-[50px] lg:flex-row lg:w-[70%] mb-[100px] mt-[50px]">
+    <div class="thumbnail w-[100%] lg:w-[50%]">
             <img src="https://t4.ftcdn.net/jpg/03/24/14/35/360_F_324143588_Jk9uwkSlhuSEyrGWkuQT7MM6mFbCayIj.jpg" class="w-[100%]" alt="" id="thumbnail_img">
     </div>
-    <form action="{{route("admin.addVideo")}}" method="POST" class="flex flex-col w-[50%]">
+    <form action="{{route("admin.addVideo")}}" method="POST" class="flex flex-col w-[100%] lg:w-[50%]">
     @csrf
     <label for="video_link" class="m-[3px]">Video link</label>
     <input type="text" id="video_link" placeholder="Link" name="video_link" class="border-4 p-[10px] rounded-xl mb-[20px]">
@@ -14,6 +15,6 @@
     </form>
 </div>
 
-<script src="{{ asset('../resources/js/new_video.js') }}"></>
+<script src="{{ asset('../resources/js/new_video.js') }}"></script>
 @endsection
 

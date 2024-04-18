@@ -19,15 +19,15 @@ let edit_btn = document.getElementById("edit_btn")
 let delete_btn = document.getElementById("delete_btn")
 let update_btn = document.getElementById("update_btn")
 let selected_cards = []
-let selected_cards_text = document.getElementById("selected_cards_text")
 checks.forEach(function(check){
     check.addEventListener("click", function(event){
+        let selected_cards_text = document.getElementById("selected_cards_text")
         if(event.target.classList.contains("text-[blue]")){
             event.target.classList.remove("text-[blue]")
             event.target.classList.add("hover:text-[black]")
             event.target.classList.add("invisible")
             event.target.classList.remove("visible")
-            event.target.classList.remove("scale-[1.2]")
+            event.target.classList.remove("scale-[1.5]")
             event.target.parentNode.parentNode.classList.remove("scale-[0.9]")
             event.target.parentNode.parentNode.classList.remove("shadow-2xl")
             event.target.parentNode.parentNode.parentNode.classList.remove("bg-[#f4f4ff]")
@@ -38,7 +38,7 @@ checks.forEach(function(check){
             event.target.classList.remove("hover:text-[black]")
             event.target.classList.remove("invisible")
             event.target.classList.add("visible")
-            event.target.classList.add("scale-[1.2]")
+            event.target.classList.add("scale-[1.5]")
             event.target.parentNode.parentNode.classList.add("scale-[0.9]")
             event.target.parentNode.parentNode.classList.add("shadow-2xl")
             event.target.parentNode.parentNode.parentNode.classList.add("bg-[#f4f4ff]")
@@ -65,8 +65,36 @@ checks.forEach(function(check){
             edit_btn.classList.remove("visible")
             edit_btn.classList.add("invisible")
         }
-        selected_cards_text.textContent = `Selected: ${selected_cards.length } videos`
+        selected_cards_text.textContent = `Selected: ${selected_cards.length }`
     })
 })
 
+let search_input_container = document.querySelector(".search_input")
+let search_input = document.getElementById("search_input")
+let search_btn = document.getElementById("search_btn")
 
+search_btn.addEventListener("click", function(event){
+    if(event.target.classList.contains("fa-magnifying-glass")){
+        event.target.classList.remove("fa-magnifying-glass")
+        event.target.classList.add("fa-x")
+        search_input_container.classList.remove("invisible")
+        selectable.classList.remove("invisible")
+    } else{
+        event.target.classList.add("fa-magnifying-glass")
+        event.target.classList.remove("fa-x")
+        search_input_container.classList.add("invisible")
+        if(selected_cards.length == 0){
+            selectable.classList.add("invisible")
+        }
+    }
+})
+
+let videos = document.querySelectorAll(".video")
+search_input.addEventListener("input", function(event){
+    videos.forEach(function(video){
+        video.classList.add("hidden")
+        if(video.textContent.toLowerCase().includes(event.target.value.toLowerCase())){
+            video.classList.remove("hidden")
+        }
+    })
+})
